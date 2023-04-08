@@ -1,3 +1,5 @@
+using System;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using NETBuddy.ML.SentimentAnalysis.Toxicity;
@@ -14,6 +16,15 @@ namespace TrumpMcDonaldz.Controllers
         {
             Toxicity = 1
         }
+
+        [ModuleInitializer]
+        internal static void WarmUp()
+        {
+            Console.WriteLine("Warming up ML.NET!");
+            
+            RuntimeHelpers.RunClassConstructor(typeof(ToxicitySA).TypeHandle);
+            ToxicitySA.Predict(new ToxicitySA.ModelInput() { Comment_text = string.Empty });
+        }
         
         [HttpGet]
         [Route(SentimentAnalysisEndpoint + "/{Type}")]
@@ -28,12 +39,12 @@ namespace TrumpMcDonaldz.Controllers
                 
                 case SentimentAnalysisType.Toxicity:
                 {
-                    var input = new ToxicitySA.ModelInput()
+                    var Input = new ToxicitySA.ModelInput()
                     {
                         Comment_text = Text
                     };
 
-                    Result = ToxicitySA.Predict(input).PredictedLabel == "1"  ? "Toxic" : "Not Toxic";
+                    Result = ToxicitySA.Predict(Input).PredictedLabel == "1"  ? "Toxic" : "Not Toxic";
 
                     break;
                 }

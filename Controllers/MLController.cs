@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SA_GoEmotion;
 using SA_KaggleToxicity;
+using TorchSharp.Modules;
 
 namespace TrumpMcDonaldz.Controllers
 {
@@ -27,11 +28,13 @@ namespace TrumpMcDonaldz.Controllers
             
             //Running one would speed up the other models :O
             RuntimeHelpers.RunClassConstructor(typeof(KaggleToxicity).TypeHandle);
+
+            KaggleToxicity.PredictAllLabels(string.Empty);
         }
         
         [HttpGet]
         [Route(SentimentAnalysisEndpoint + "/{Type}")]
-        public ValueTask<string> Get([FromRoute] SentimentAnalysisType Type, [FromQuery] string Text, [FromQuery] bool ReplyText = true)
+        public ValueTask<string> Get([FromRoute] SentimentAnalysisType Type, [FromQuery] string Text, [FromQuery] bool ReplyText = true, [FromQuery] float Threshold = 0f)
         {
             string Result;
             
@@ -49,7 +52,7 @@ namespace TrumpMcDonaldz.Controllers
 
                     else
                     {
-                        Result = KaggleToxicity.PredictAllLabelsText(Text);
+                        Result = KaggleToxicity.PredictAllLabelsText(Text, Threshold);
                     }
 
                     break;
@@ -64,7 +67,7 @@ namespace TrumpMcDonaldz.Controllers
 
                     else
                     {
-                        Result = GoEmotion.PredictAllLabelsText(Text);
+                        Result = GoEmotion.PredictAllLabelsText(Text, Threshold);
                     }
 
                     break;

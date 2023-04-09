@@ -14,12 +14,11 @@
     </ItemGroup>
 
     <ItemGroup>
-        <None Include="Modules\ML\SentimentAnalysis\Toxicity\ToxicitySA.consumption.cs" />
-        <None Include="Modules\ML\SentimentAnalysis\Toxicity\ToxicitySA.training.cs" />
-        <None Update="Modules\ML\SentimentAnalysis\Toxicity\ToxicitySA.mlnet">
-            <Link>ToxicitySA.mlnet</Link>
-            <DependentUpon>ToxicitySA.mbconfig</DependentUpon>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <None Include="Modules\ML\SentimentAnalysis\Toxicity\KaggleToxicity.consumption.cs" />
+        <None Update="Modules\ML\SentimentAnalysis\Toxicity\KaggleToxicity.mlnet">
+          <Link>KaggleToxicity.mlnet</Link>
+          <DependentUpon>KaggleToxicity.mbconfig</DependentUpon>
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>
 

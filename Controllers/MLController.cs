@@ -25,9 +25,8 @@ namespace TrumpMcDonaldz.Controllers
         {
             Console.WriteLine("Warming up ML.NET!");
             
+            //Running one would speed up the other models :O
             RuntimeHelpers.RunClassConstructor(typeof(KaggleToxicity).TypeHandle);
-            RuntimeHelpers.RunClassConstructor(typeof(GoEmotion).TypeHandle);
-            KaggleToxicity.Predict(new KaggleToxicity.ModelInput() { Text = string.Empty });
         }
         
         [HttpGet]

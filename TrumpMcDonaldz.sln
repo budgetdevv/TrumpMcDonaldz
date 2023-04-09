@@ -2,6 +2,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrumpMcDonaldz", "TrumpMcDonaldz.csproj", "{ABFFD0AD-8605-4FE0-830F-B64FBA4CB5A2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SA_KaggleToxicity", "..\MachineLearning\Projects\SA_KaggleToxicity\SA_KaggleToxicity.csproj", "{436C1941-45D5-40E0-BFF1-3F019D5AF6E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SA_GoEmotion", "..\MachineLearning\Projects\GoEmotion3\SA_GoEmotion.csproj", "{D642A28C-3917-4131-A8B0-28E6FC987CBC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +16,13 @@ Global
 		{ABFFD0AD-8605-4FE0-830F-B64FBA4CB5A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ABFFD0AD-8605-4FE0-830F-B64FBA4CB5A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ABFFD0AD-8605-4FE0-830F-B64FBA4CB5A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{436C1941-45D5-40E0-BFF1-3F019D5AF6E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{436C1941-45D5-40E0-BFF1-3F019D5AF6E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{436C1941-45D5-40E0-BFF1-3F019D5AF6E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{436C1941-45D5-40E0-BFF1-3F019D5AF6E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D642A28C-3917-4131-A8B0-28E6FC987CBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D642A28C-3917-4131-A8B0-28E6FC987CBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D642A28C-3917-4131-A8B0-28E6FC987CBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D642A28C-3917-4131-A8B0-28E6FC987CBC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -7,26 +7,26 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0-preview.2.23153.2" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
-        <PackageReference Include="Microsoft.ML" Version="2.0.0" />
-        <PackageReference Include="Microsoft.ML.FastTree" Version="2.0.0" />
-        <PackageReference Include="Microsoft.ML.TorchSharp" Version="0.20.0" />
-        <PackageReference Include="TorchSharp-cuda-windows" Version="0.98.3" />
     </ItemGroup>
 
-    <ItemGroup>
-        <None Include="Modules\ML\SentimentAnalysis\Toxicity\KaggleToxicity.consumption.cs" />
-        <None Update="Modules\ML\SentimentAnalysis\Toxicity\KaggleToxicity.mlnet">
-          <Link>KaggleToxicity.mlnet</Link>
-          <DependentUpon>KaggleToxicity.mbconfig</DependentUpon>
-          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </None>
-    </ItemGroup>
+<!--    <ItemGroup>-->
+<!--        <None Update="Modules\ML\SentimentAnalysis\Toxicity\KaggleToxicity.mlnet">-->
+<!--          <Link>KaggleToxicity.mlnet</Link>-->
+<!--          <DependentUpon>KaggleToxicity.mbconfig</DependentUpon>-->
+<!--          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>-->
+<!--        </None>-->
+<!--    </ItemGroup>-->
 
     <ItemGroup>
         <None Remove=".gitignore" />
         <None Remove="TrumpMcDonaldz.sln.DotSettings" />
         <Content Remove="appsettings.json" />
         <Content Remove="appsettings.Development.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\MachineLearning\Projects\GoEmotion3\SA_GoEmotion.csproj" />
+      <ProjectReference Include="..\MachineLearning\Projects\SA_KaggleToxicity\SA_KaggleToxicity.csproj" />
     </ItemGroup>
 
 </Project>

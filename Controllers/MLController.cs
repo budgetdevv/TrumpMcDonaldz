@@ -3,7 +3,8 @@ using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using TrumpMcDonaldz.Modules.ML.SentimentAnalysis.Toxicity;
+using SA_GoEmotion;
+using SA_KaggleToxicity;
 
 namespace TrumpMcDonaldz.Controllers
 {
@@ -25,12 +26,13 @@ namespace TrumpMcDonaldz.Controllers
             Console.WriteLine("Warming up ML.NET!");
             
             RuntimeHelpers.RunClassConstructor(typeof(KaggleToxicity).TypeHandle);
+            RuntimeHelpers.RunClassConstructor(typeof(GoEmotion).TypeHandle);
             KaggleToxicity.Predict(new KaggleToxicity.ModelInput() { Text = string.Empty });
         }
         
         [HttpGet]
         [Route(SentimentAnalysisEndpoint + "/{Type}")]
-        public ValueTask<string> Get([FromRoute] SentimentAnalysisType Type, [FromQuery] string Text)
+        public ValueTask<string> Get([FromRoute] SentimentAnalysisType Type, [FromQuery] string Text, [FromQuery] bool ReplyText = true)
         {
             string Result;
             
@@ -41,27 +43,33 @@ namespace TrumpMcDonaldz.Controllers
                 
                 case SentimentAnalysisType.Toxicity:
                 {
-                    var Input = new KaggleToxicity.ModelInput()
+                    if (!ReplyText)
                     {
-                        Text = Text
-                    };
+                        Result = JsonSerializer.Serialize(KaggleToxicity.PredictAllLabels(Text));
+                    }
 
-                    Result = JsonSerializer.Serialize(KaggleToxicity.PredictAllLabels(Input));
+                    else
+                    {
+                        Result = KaggleToxicity.PredictAllLabelsText(Text);
+                    }
 
                     break;
                 }
                 
-                // case SentimentAnalysisType.Emotion:
-                // {
-                //     var Input = new KaggleToxicity.ModelInput()
-                //     {
-                //         Text = Text
-                //     };
-                //
-                //     Result = KaggleToxicity.Predict(Input).PredictedLabel == "1"  ? "Toxic" : "Not Toxic";
-                //
-                //     break;
-                // }
+                case SentimentAnalysisType.Emotion:
+                {
+                    if (!ReplyText)
+                    {
+                        Result = JsonSerializer.Serialize(GoEmotion.PredictAllLabels(Text));
+                    }
+
+                    else
+                    {
+                        Result = GoEmotion.PredictAllLabelsText(Text);
+                    }
+
+                    break;
+                }
             }
             
             Ret:

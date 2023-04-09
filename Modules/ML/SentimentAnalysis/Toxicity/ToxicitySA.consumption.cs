@@ -16,10 +16,6 @@ namespace NETBuddy.ML.SentimentAnalysis.Toxicity
         #region model input class
         public class ModelInput
         {
-            [LoadColumn(0)]
-            [ColumnName(@"id")]
-            public string Id { get; set; }
-
             [LoadColumn(1)]
             [ColumnName(@"comment_text")]
             public string Comment_text { get; set; }
@@ -27,27 +23,6 @@ namespace NETBuddy.ML.SentimentAnalysis.Toxicity
             [LoadColumn(2)]
             [ColumnName(@"toxic")]
             public string Toxic { get; set; }
-
-            [LoadColumn(3)]
-            [ColumnName(@"severe_toxic")]
-            public string Severe_toxic { get; set; }
-
-            [LoadColumn(4)]
-            [ColumnName(@"obscene")]
-            public string Obscene { get; set; }
-
-            [LoadColumn(5)]
-            [ColumnName(@"threat")]
-            public string Threat { get; set; }
-
-            [LoadColumn(6)]
-            [ColumnName(@"insult")]
-            public string Insult { get; set; }
-
-            [LoadColumn(7)]
-            [ColumnName(@"identity_hate")]
-            public string Identity_hate { get; set; }
-
         }
 
         #endregion
@@ -58,36 +33,14 @@ namespace NETBuddy.ML.SentimentAnalysis.Toxicity
         #region model output class
         public class ModelOutput
         {
-            [ColumnName(@"id")]
-            public string Id { get; set; }
-
-            [ColumnName(@"comment_text")]
-            public string Comment_text { get; set; }
-
             [ColumnName(@"toxic")]
             public uint Toxic { get; set; }
-
-            [ColumnName(@"severe_toxic")]
-            public string Severe_toxic { get; set; }
-
-            [ColumnName(@"obscene")]
-            public string Obscene { get; set; }
-
-            [ColumnName(@"threat")]
-            public string Threat { get; set; }
-
-            [ColumnName(@"insult")]
-            public string Insult { get; set; }
-
-            [ColumnName(@"identity_hate")]
-            public string Identity_hate { get; set; }
-
+            
             [ColumnName(@"PredictedLabel")]
             public string PredictedLabel { get; set; }
 
             [ColumnName(@"Score")]
             public float[] Score { get; set; }
-
         }
 
         #endregion

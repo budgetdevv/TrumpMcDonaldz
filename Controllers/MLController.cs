@@ -14,7 +14,8 @@ namespace TrumpMcDonaldz.Controllers
         
         public enum SentimentAnalysisType: int
         {
-            Toxicity = 1
+            Toxicity = 1,
+            Emotion = 2
         }
 
         [ModuleInitializer]
@@ -38,6 +39,18 @@ namespace TrumpMcDonaldz.Controllers
                     goto InvalidType;
                 
                 case SentimentAnalysisType.Toxicity:
+                {
+                    var Input = new ToxicitySA.ModelInput()
+                    {
+                        Comment_text = Text
+                    };
+
+                    Result = ToxicitySA.Predict(Input).PredictedLabel == "1"  ? "Toxic" : "Not Toxic";
+
+                    break;
+                }
+                
+                case SentimentAnalysisType.Emotion:
                 {
                     var Input = new ToxicitySA.ModelInput()
                     {

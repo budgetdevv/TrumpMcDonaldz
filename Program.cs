@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
+// ReSharper disable once RedundantUsingDirective
+using Microsoft.AspNetCore.Hosting; //Don't remove, it is for RELEASE build
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Swashbuckle.AspNetCore.SwaggerUI;
 
 var builder = WebApplication.CreateBuilder(args);
 

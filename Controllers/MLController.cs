@@ -3,9 +3,9 @@ using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using SA_GoEmotion;
-using SA_KaggleToxicity;
-using TorchSharp.Modules;
+using SentimentAnalysis.GoEmotion;
+using SentimentAnalysis.PosNeg;
+using SentimentAnalysis.Toxicity;
 
 namespace TrumpMcDonaldz.Controllers
 {
@@ -17,8 +17,9 @@ namespace TrumpMcDonaldz.Controllers
         
         public enum SentimentAnalysisType: int
         {
-            Toxicity = 1,
-            Emotion = 2
+            PosNeg = 1,
+            Emotion = 2,
+            Toxicity = 3,
         }
 
         [ModuleInitializer]
@@ -27,58 +28,82 @@ namespace TrumpMcDonaldz.Controllers
             Console.WriteLine("Warming up ML.NET!");
             
             //Running one would speed up the other models :O
-            RuntimeHelpers.RunClassConstructor(typeof(KaggleToxicity).TypeHandle);
+            RuntimeHelpers.RunClassConstructor(typeof(PosNegModel).TypeHandle);
 
-            KaggleToxicity.PredictAllLabels(string.Empty);
+            PosNegModel.PredictAllLabels(string.Empty);
         }
         
         [HttpGet]
         [Route(SentimentAnalysisEndpoint + "/{Type}")]
         public ValueTask<string> Get([FromRoute] SentimentAnalysisType Type, [FromQuery] string Text, [FromQuery] bool ReplyText = true, [FromQuery] float Threshold = 0f)
         {
-            string Result;
-            
-            switch (Type)
+            string result;
+
+            if (ReplyText)
             {
-                default:
-                    goto InvalidType;
-                
-                case SentimentAnalysisType.Toxicity:
+                switch (Type)
                 {
-                    if (!ReplyText)
+                    default:
+                        goto InvalidType;
+                                
+                    case SentimentAnalysisType.PosNeg:
                     {
-                        Result = JsonSerializer.Serialize(KaggleToxicity.PredictAllLabels(Text));
+                        result = PosNegModel.PredictIsNegativeText(Text, Threshold);
+                                    
+                        break;
                     }
-
-                    else
+                                
+                    case SentimentAnalysisType.Emotion:
                     {
-                        Result = KaggleToxicity.PredictAllLabelsText(Text, Threshold);
+                        result = GoEmotion.PredictAllLabelsText(Text, Threshold);
+                    
+                        break;
                     }
-
-                    break;
+                    
+                    case SentimentAnalysisType.Toxicity:
+                    {
+                        result = Toxicity.PredictAllLabelsText(Text, Threshold);
+                        
+                        break;
+                    }
                 }
-                
-                case SentimentAnalysisType.Emotion:
+            }
+
+            else
+            {
+                switch (Type)
                 {
-                    if (!ReplyText)
+                    default:
+                        goto InvalidType;
+                                
+                    case SentimentAnalysisType.PosNeg:
                     {
-                        Result = JsonSerializer.Serialize(GoEmotion.PredictAllLabels(Text));
-                    }
+                        result = JsonSerializer.Serialize(PosNegModel.PredictAllLabels(Text));
 
-                    else
+                        break;
+                    }
+                                
+                    case SentimentAnalysisType.Emotion:
                     {
-                        Result = GoEmotion.PredictAllLabelsText(Text, Threshold);
+                        result = JsonSerializer.Serialize(GoEmotion.PredictAllLabels(Text));
+                    
+                        break;
                     }
+                    
+                    case SentimentAnalysisType.Toxicity:
+                    {
+                        result = JsonSerializer.Serialize(Toxicity.PredictAllLabels(Text));
 
-                    break;
+                        break;
+                    }
                 }
             }
             
             Ret:
-            return new ValueTask<string>(Result);
+            return new ValueTask<string>(result);
             
             InvalidType:
-            Result = "Invalid Type!";
+            result = "Invalid Type!";
             goto Ret;
         }
     }

@@ -25,8 +25,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\MachineLearning\Projects\GoEmotion3\SA_GoEmotion.csproj" />
-      <ProjectReference Include="..\MachineLearning\Projects\SA_KaggleToxicity\SA_KaggleToxicity.csproj" />
+      <ProjectReference Include="..\MachineLearning\Projects\SentimentAnalysis\SentimentAnalysis\SentimentAnalysis.csproj" />
     </ItemGroup>
 
 </Project>
